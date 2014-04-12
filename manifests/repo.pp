@@ -42,7 +42,7 @@ class logstashforwarder::repo {
     }
     'RedHat': {
       yumrepo { 'logstashforwarder':
-	name => 'logstashforwarder',
+	name => 'elasticsearch logstashforwarder',
         baseurl  => 'http://packages.elasticsearch.org/logstashforwarder/centos',
         gpgcheck => 1,
         gpgkey   => 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch',
