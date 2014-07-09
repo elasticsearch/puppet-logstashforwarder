@@ -114,6 +114,10 @@ class logstashforwarder::params {
       # main application
       $package = [ 'logstash-forwarder' ]
     }
+    'SLES', 'opensuse': {
+      # main application
+      $package = [ 'logstash-forwarder' ]
+    }
     default: {
       fail("\"${module_name}\" provides no package default value
             for \"${::operatingsystem}\"")
@@ -137,6 +141,14 @@ class logstashforwarder::params {
       $service_pattern    = $service_name
       $service_providers  = [ 'init' ]
       $defaults_location  = '/etc/default'
+    }
+    'SLES', 'opensuse': {
+      $service_name       = 'logstash-forwarder'
+      $service_hasrestart = true
+      $service_hasstatus  = true
+      $service_pattern    = $service_name
+      $service_providers  = [ 'init' ]
+      $defaults_location  = '/etc/sysconfig'
     }
     'Darwin': {
       $service_name       = 'net.logstash.forwarder'
