@@ -1,8 +1,10 @@
-require 'puppet/type/file'
-require 'puppet/type/file/owner'
-require 'puppet/type/file/group'
-require 'puppet/type/file/mode'
-require 'puppet/util/checksums'
+file_defined = false
+if Object.const_defined?("Puppet")
+  konst = Object.const_get("Puppet")
+  if (konst.const_defined?("Type"))
+    file_defined = konst.const_get("Type").const_defined?("File")
+  end
+end
 
 Puppet::Type.newtype(:logstashforwarder_config) do
   @doc = "Collects any elasticsearch nodes for unicast and merges that with the hash config given in 'config_hash'
