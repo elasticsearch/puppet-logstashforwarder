@@ -123,11 +123,12 @@ class logstashforwarder::config {
     logstashforwarder_config { 'lsf-config':
       ensure => 'present',
       config => $main_config,
-      path   => "${logstashforwarder::configdir}/config.json",
+      path   => "/etc/logstash-forwarder.conf",
       tag    => "LSF_CONFIG_${::fqdn}",
       owner  => $logstashforwarder::logstashforwarder_user,
       group  => $logstashforwarder::logstashforwarder_group,
-      notify => $notify_service
+      notify => $notify_service,
+      require => File[$logstashforwarder::configdir],
     }
 
   } elsif ( $logstashforwarder::ensure == 'absent' ) {
