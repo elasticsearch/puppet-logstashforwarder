@@ -2,6 +2,8 @@
 
 A puppet module for managing [logstash-forwarder](https://github.com/elasticsearch/logstash-forwarder)
 
+** N.B This module is currently not ready and unsupported **
+
 [![Build Status](https://travis-ci.org/elasticsearch/puppet-logstashforwarder.png?branch=master)](https://travis-ci.org/elasticsearch/puppet-logstashforwarder)
 
 ## Requirements
