@@ -50,6 +50,13 @@ class logstashforwarder::config {
       false => undef,
     }
 
+    file { "$logstashforwarder::configdir/conf.d":
+      ensure => directory,
+      owner  => root,
+      group  => root,
+      mode   => 755,
+    }
+
     file { $logstashforwarder::configdir:
       ensure => directory,
       mode   => '0644',
