@@ -54,6 +54,8 @@ class logstashforwarder::params {
   # Exec timeout
   $package_dl_timeout = 300  # 300 seconds is default of Puppet
 
+  $config_file_path = '/etc/logstash-forwarder.conf'
+
   #### Internal module values
 
   # User and Group for the files and user to run the service as.
