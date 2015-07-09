@@ -18,7 +18,7 @@
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
 export PATH
 
-name=logstash-forwarder
+name=<%= scope.lookupvar('logstashforwarder::lsf_name' %>)
 program=<%= @installpath %>/bin/$name
 args=-config\ <%= @configdir %>/$name.conf
 pidfile="/var/run/$name.pid"
