@@ -91,7 +91,7 @@ class logstashforwarder::params {
     'Linux': {
       $configdir = '/etc/logstashforwarder'
       $package_dir = '/opt/logstashforwarder/swdl'
-      $installpath = '/opt/logstash-forwarder'
+      $installpath = '/opt/logstashforwarder'
     }
     'Darwin': {
       $configdir = '/Library/Application Support/Logstashforwarder'

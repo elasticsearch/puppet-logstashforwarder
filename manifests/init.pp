@@ -176,7 +176,7 @@ class logstashforwarder(
   $init_defaults           = $logstashforwarder::params::init_defaults,
   $init_defaults_file      = undef,
   $init_template           = undef,
-  $manage_repo             = true,
+  $manage_repo             = false
 ) inherits logstashforwarder::params {
 
   anchor {'logstashforwarder::begin': }
