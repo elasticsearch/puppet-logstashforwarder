@@ -158,7 +158,7 @@ class logstashforwarder(
   $ssl_cert                = undef,
   $ssl_key                 = undef,
   $ssl_ca                  = undef,
-  $timeout                 = 15,
+  $timeout                 = 16,
   $status                  = $logstashforwarder::params::status,
   $restart_on_change       = $logstashforwarder::params::restart_on_change,
   $autoupgrade             = $logstashforwarder::params::autoupgrade,
@@ -179,90 +179,47 @@ class logstashforwarder(
   $manage_repo             = false
 ) inherits logstashforwarder::params {
 
-  anchor {'logstashforwarder::begin': }
-  anchor {'logstashforwarder::end': }
-
-
-  #### Validate parameters
-
   # ensure
   if ! ($ensure in [ 'present', 'absent' ]) {
     fail("\"${ensure}\" is not a valid ensure parameter value")
   }
 
-
-  #### Manage actions
-
-  # package(s)
-  class { 'logstashforwarder::package': }
-
-  # configuration
-  class { 'logstashforwarder::config': }
-
-  # service(s)
-  class { 'logstashforwarder::service': }
-
-  if ($manage_repo == true) {
-    # Set up repositories
-    class { 'logstashforwarder::repo': }
-
-    # Ensure that we set up the repositories before trying to install
-    # the packages
-    Anchor['logstashforwarder::begin']
-    -> Class['logstashforwarder::repo']
-    -> Class['logstashforwarder::package']
-  }
-
-  #### Manage relationships
-
+  #### Validate parameters
   if $ensure == 'present' {
-
-    # autoupgrade
+    validate_array($servers)
+    validate_string($ssl_key, $ssl_ca, $ssl_cert)
+    validate_bool($restart_on_change)
     validate_bool($autoupgrade)
+    validate_bool($purge_configdir)
+    validate_bool($manage_repo)
 
-    # service status
     if ! ($status in [ 'enabled', 'disabled', 'running', 'unmanaged' ]) {
       fail("\"${status}\" is not a valid status parameter value")
     }
-
-    # restart on change
-    validate_bool($restart_on_change)
-
-    # purge conf dir
-    validate_bool($purge_configdir)
-
     if ! ($service_provider in $logstashforwarder::params::service_providers) {
       fail("\"${service_provider}\" is not a valid provider for \"${::operatingsystem}\"")
     }
-
-    validate_bool($manage_repo)
-
-    validate_array($servers)
-    validate_string($ssl_key, $ssl_ca, $ssl_cert)
-
     if (!is_integer($timeout)) {
       fail("\"${timeout}\" is not a valid timeout value")
     }
-
-    # we need the software before configuring it
-    Anchor['logstashforwarder::begin']
-    -> Class['logstashforwarder::package']
-    -> Class['logstashforwarder::config']
-
-    # we need the software and a working configuration before running a service
-    Class['logstashforwarder::package'] -> Class['logstashforwarder::service']
-    Class['logstashforwarder::config']  -> Class['logstashforwarder::service']
-
-    Class['logstashforwarder::service'] -> Anchor['logstashforwarder::end']
-
-  } else {
-
-    # make sure all services are getting stopped before software removal
-    Anchor['logstashforwarder::begin']
-    -> Class['logstashforwarder::service']
-    -> Class['logstashforwarder::package']
-    -> Anchor['logstashforwarder::end']
-
   }
 
+  #### Manage actions
+
+  if ($manage_repo == true) {
+    # Set up repositories
+    class { 'logstashforwarder::repo':
+      notify => Class['logstashforwarder::package'],
+    }
+  }
+  # package(s)
+  class { 'logstashforwarder::package': }
+  # configuration
+  class { 'logstashforwarder::config':
+    subscribe => Class['logstashforwarder::package'],
+  }
+  # service(s)
+  class { 'logstashforwarder::service': 
+    subscribe => Class['logstashforwarder::package','logstashforwarder::config'],
+  }
 }
