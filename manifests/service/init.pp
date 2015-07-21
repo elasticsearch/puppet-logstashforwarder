@@ -114,7 +114,12 @@ define logstashforwarder::service::init{
         before  => Service[$name],
         notify  => $notify_service
       }
-
+    }
+    else {
+      file { "/etc/init.d/${logstashforwarder::service_name}":
+        ensure  => file,
+        content => template("${module_name}/etc/init.d/logstashforwarder.Debian.erb"),
+      }
     }
 
   }

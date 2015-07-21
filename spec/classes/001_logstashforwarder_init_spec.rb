@@ -214,6 +214,7 @@ describe 'logstashforwarder', :type => 'class' do
 
             let (:params) {
               default_params.merge({
+                :ensure        => 'present',
                 :init_template => "logstashforwarder/etc/init.d/logstashforwarder.Debian.erb"
               })
             }
@@ -226,6 +227,7 @@ describe 'logstashforwarder', :type => 'class' do
 
             let (:params) {
               default_params.merge({
+                :ensure            => 'present',
                 :init_template     => "logstashforwarder/etc/init.d/logstashforwarder.Debian.erb",
                 :restart_on_change => false
               })
