@@ -20,6 +20,10 @@
 #   * This is thus destructive and should be used with care.
 #   Defaults to <tt>present</tt>.
 #
+# [*lsf_name*]
+#   String. Set the name used in any situations to avoid gap of naming.
+#   Defaults to <tt>logstash-forwarder</tt>.
+#
 # [*autoupgrade*]
 #   Boolean. If set to <tt>true</tt>, any managed package gets upgraded
 #   on each Puppet run when the package provider is able to find a newer
@@ -154,6 +158,7 @@
 #
 class logstashforwarder(
   $ensure                  = $logstashforwarder::params::ensure,
+  $lsf_name                = $logstashforwarder::params::lsf_name,
   $servers                 = undef,
   $ssl_cert                = undef,
   $ssl_key                 = undef,

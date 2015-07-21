@@ -46,8 +46,8 @@ describe 'logstashforwarder', :type => 'class' do
         it { should contain_class('logstashforwarder::config').that_requires('Class[logstashforwarder::package]') }
         it { should contain_class('logstashforwarder::service').that_requires('Class[logstashforwarder::package]').that_requires('Class[logstashforwarder::config]') }
 
-        it { should contain_file('/etc/logstashforwarder') }
-        it { should contain_file('/etc/logstashforwarder/ssl') }
+        it { should contain_file('/etc/logstash-forwarder') }
+        it { should contain_file('/etc/logstash-forwarder/ssl') }
 
         it { should contain_logstashforwarder_config('lsf-config') }
       end
@@ -108,10 +108,10 @@ describe 'logstashforwarder', :type => 'class' do
               })
             }
 
-            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstashforwarder/swdl') }
-            it { should contain_file('/opt/logstashforwarder/swdl/').with(:purge => false, :force => false, :require => "Exec[create_package_dir_logstashforwarder]") }
-            it { should contain_file("/opt/logstashforwarder/swdl/package.#{pkg_ext}").with(:source => "puppet:///path/to/package.#{pkg_ext}", :backup => false) }
-            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstashforwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
+            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstash-forwarder/swdl') }
+            it { should contain_file('/opt/logstash-forwarder/swdl/').with(:purge => false, :force => false, :require => "Exec[create_package_dir_logstashforwarder]") }
+            it { should contain_file("/opt/logstash-forwarder/swdl/package.#{pkg_ext}").with(:source => "puppet:///path/to/package.#{pkg_ext}", :backup => false) }
+            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstash-forwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
           end
 
           context 'using http:// schema' do
@@ -122,10 +122,10 @@ describe 'logstashforwarder', :type => 'class' do
               })
             } 
 
-            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstashforwarder/swdl') }
-            it { should contain_file('/opt/logstashforwarder/swdl/').with(:purge => false, :force => false, :require => "Exec[create_package_dir_logstashforwarder]") }
-            it { should contain_exec('download_package_logstashforwarder').with(:command => "wget -O /opt/logstashforwarder/swdl/package.#{pkg_ext} http://www.domain.com/path/to/package.#{pkg_ext} 2> /dev/null", :require => 'File[/opt/logstashforwarder/swdl]') }
-            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstashforwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
+            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstash-forwarder/swdl') }
+            it { should contain_file('/opt/logstash-forwarder/swdl/').with(:purge => false, :force => false, :require => "Exec[create_package_dir_logstashforwarder]") }
+            it { should contain_exec('download_package_logstashforwarder').with(:command => "wget -O /opt/logstash-forwarder/swdl/package.#{pkg_ext} http://www.domain.com/path/to/package.#{pkg_ext} 2> /dev/null", :require => 'File[/opt/logstash-forwarder/swdl]') }
+            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstash-forwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
           end
 
           context 'using https:// schema' do
@@ -136,10 +136,10 @@ describe 'logstashforwarder', :type => 'class' do
               })
             }
 
-            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstashforwarder/swdl') }
-            it { should contain_file('/opt/logstashforwarder/swdl').with(:purge => false, :force => false, :require => 'Exec[create_package_dir_logstashforwarder]') }
-            it { should contain_exec('download_package_logstashforwarder').with(:command => "wget -O /opt/logstashforwarder/swdl/package.#{pkg_ext} https://www.domain.com/path/to/package.#{pkg_ext} 2> /dev/null", :require => 'File[/opt/logstashforwarder/swdl]') }
-            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstashforwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
+            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstash-forwarder/swdl') }
+            it { should contain_file('/opt/logstash-forwarder/swdl').with(:purge => false, :force => false, :require => 'Exec[create_package_dir_logstashforwarder]') }
+            it { should contain_exec('download_package_logstashforwarder').with(:command => "wget -O /opt/logstash-forwarder/swdl/package.#{pkg_ext} https://www.domain.com/path/to/package.#{pkg_ext} 2> /dev/null", :require => 'File[/opt/logstash-forwarder/swdl]') }
+            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstash-forwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
           end
 
           context 'using ftp:// schema' do
@@ -150,10 +150,10 @@ describe 'logstashforwarder', :type => 'class' do
               })
             }
 
-            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstashforwarder/swdl') }
-            it { should contain_file('/opt/logstashforwarder/swdl').with(:purge => false, :force => false, :require => 'Exec[create_package_dir_logstashforwarder]') }
-            it { should contain_exec('download_package_logstashforwarder').with(:command => "wget -O /opt/logstashforwarder/swdl/package.#{pkg_ext} ftp://www.domain.com/path/to/package.#{pkg_ext} 2> /dev/null", :require => 'File[/opt/logstashforwarder/swdl]') }
-            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstashforwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
+            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstash-forwarder/swdl') }
+            it { should contain_file('/opt/logstash-forwarder/swdl').with(:purge => false, :force => false, :require => 'Exec[create_package_dir_logstashforwarder]') }
+            it { should contain_exec('download_package_logstashforwarder').with(:command => "wget -O /opt/logstash-forwarder/swdl/package.#{pkg_ext} ftp://www.domain.com/path/to/package.#{pkg_ext} 2> /dev/null", :require => 'File[/opt/logstash-forwarder/swdl]') }
+            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstash-forwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
           end
 
           context 'using file:// schema' do
@@ -164,10 +164,10 @@ describe 'logstashforwarder', :type => 'class' do
               })
             }
 
-            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstashforwarder/swdl') }
-            it { should contain_file('/opt/logstashforwarder/swdl').with(:purge => false, :force => false, :require => 'Exec[create_package_dir_logstashforwarder]') }
-            it { should contain_file("/opt/logstashforwarder/swdl/package.#{pkg_ext}").with(:source => "/path/to/package.#{pkg_ext}", :backup => false) }
-            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstashforwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
+            it { should contain_exec('create_package_dir_logstashforwarder').with(:command => 'mkdir -p /opt/logstash-forwarder/swdl') }
+            it { should contain_file('/opt/logstash-forwarder/swdl').with(:purge => false, :force => false, :require => 'Exec[create_package_dir_logstashforwarder]') }
+            it { should contain_file("/opt/logstash-forwarder/swdl/package.#{pkg_ext}").with(:source => "/path/to/package.#{pkg_ext}", :backup => false) }
+            it { should contain_package('logstash-forwarder').with(:ensure => 'present', :source => "/opt/logstash-forwarder/swdl/package.#{pkg_ext}", :provider => pkg_prov) }
           end
 
         end
@@ -282,7 +282,7 @@ describe 'logstashforwarder', :type => 'class' do
           })
         }
 
-        it { should contain_file('/etc/logstashforwarder').with(:ensure => 'absent', :force => true, :recurse => true) }
+        it { should contain_file('/etc/logstash-forwarder').with(:ensure => 'absent', :force => true, :recurse => true) }
         it { should contain_package('logstash-forwarder').with(:ensure => 'purged') }
         it { should contain_service('logstash-forwarder').with(:ensure => 'stopped', :enable => false) }
 

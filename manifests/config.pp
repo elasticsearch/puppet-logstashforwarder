@@ -123,7 +123,7 @@ class logstashforwarder::config {
     logstashforwarder_config { 'lsf-config':
       ensure  => 'present',
       config  => $main_config,
-      path    => '/etc/logstash-forwarder.conf',
+      path    => "${logstashforwarder::configdir}/${logstashforwarder::lsf_name}.conf",
       tag     => "LSF_CONFIG_${::fqdn}",
       owner   => $logstashforwarder::logstashforwarder_user,
       group   => $logstashforwarder::logstashforwarder_group,

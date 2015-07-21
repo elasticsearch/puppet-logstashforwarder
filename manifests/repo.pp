@@ -39,7 +39,7 @@ class logstashforwarder::repo {
         location    => 'http://packages.elasticsearch.org/logstashforwarder/debian',
         release     => 'stable',
         repos       => 'main',
-        key         => 'D88E42B4',
+        key         => '46095ACC8548582C1A2699A9D27D666CD88E42B4',
         key_source  => 'http://packages.elasticsearch.org/GPG-KEY-elasticsearch',
         include_src => false,
       }

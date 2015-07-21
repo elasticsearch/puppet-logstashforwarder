@@ -34,6 +34,9 @@ class logstashforwarder::params {
   # ensure
   $ensure = 'present'
 
+  # Name to use instead of hardcoded name 
+  $lsf_name = 'logstash-forwarder'
+
   # autoupgrade
   $autoupgrade = false
 
@@ -89,12 +92,12 @@ class logstashforwarder::params {
   # Different path definitions
   case $::kernel {
     'Linux': {
-      $configdir = '/etc/logstashforwarder'
-      $package_dir = '/opt/logstashforwarder/swdl'
-      $installpath = '/opt/logstashforwarder'
+      $configdir   = "/etc/${lsf_name}"
+      $package_dir = "/opt/${lsf_name}/swdl"
+      $installpath = "/opt/${lsf_name}"
     }
     'Darwin': {
-      $configdir = '/Library/Application Support/Logstashforwarder'
+      $configdir   = '/Library/Application Support/Logstashforwarder'
       $package_dir = '/Library/Logstashforwarder/swdl'
       $installpath = '/Library/Logstashforwarder'
     }
@@ -123,7 +126,7 @@ class logstashforwarder::params {
   # service parameters
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Fedora', 'Scientific', 'Amazon', 'OracleLinux': {
-      $service_name       = 'logstash-forwarder'
+      $service_name       = $lsf_name
       $service_hasrestart = true
       $service_hasstatus  = true
       $service_pattern    = $service_name
@@ -131,7 +134,7 @@ class logstashforwarder::params {
       $defaults_location  = '/etc/sysconfig'
     }
     'Debian', 'Ubuntu': {
-      $service_name       = 'logstash-forwarder'
+      $service_name       = $lsf_name
       $service_hasrestart = true
       $service_hasstatus  = true
       $service_pattern    = $service_name
