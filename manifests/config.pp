@@ -62,6 +62,8 @@ class logstashforwarder::config {
       require => File[$logstashforwarder::configdir]
     }
 
+    create_resources(logstashforwarder::file, $logstashforwarder::files)
+
     # SSL Files
     $ssl_cert = $logstashforwarder::ssl_cert
     $ssl_ca = $logstashforwarder::ssl_ca

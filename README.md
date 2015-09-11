@@ -99,6 +99,21 @@ For configuring the files you want to process you can use the 'file' define:
        fields => { 'type' => 'apache' },
      }
 
+Or alternatively, use the param from init.pp
+
+     class { 'logstashforwarder':
+       files => {
+        'syslog' => {
+           'paths' => ['/var/log/syslog'],
+           'fields' => { 'type' => 'apache' }
+         },
+         'apache' => {
+           'paths'  => [ '/var/log/apache/access.log' ],
+           'fields' => { 'type' => 'apache' },
+         }
+       }
+     }
+
 The 'fields' hash allows you to set custom fields which you can use in Logstash.
 
 ## Repository management
