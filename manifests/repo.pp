@@ -57,7 +57,7 @@ class logstashforwarder::repo {
       exec { 'logstashforwarder_suse_import_gpg':
         command => 'rpmkeys --import http://packages.elasticsearch.org/GPG-KEY-elasticsearch',
         unless  => 'test $(rpm -qa gpg-pubkey | grep -i "D88E42B4" | wc -l) -eq 1 ',
-        notify  => [ Zypprepo['elasticsearch'] ]
+        notify  => [ Zypprepo['logstashforwarder'] ]
       }
 
       zypprepo { 'logstashforwarder':
