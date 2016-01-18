@@ -127,6 +127,23 @@
 #   logstash-forwarder will assume the connection or server is bad and
 #   will connect to a server chosen at random from the servers list.
 #
+# [*files*]
+#   A hash of file resources to configure.
+#   Example:
+#     class { 'logstashforwarder':
+#       files => {
+#         'syslog' => {
+#           'paths' => ['/var/log/syslog'],
+#           'fields' => { 'type' => 'apache' }
+#         },
+#         'apache' => {
+#           'paths'  => [ '/var/log/apache/access.log' ],
+#           'fields' => { 'type' => 'apache' },
+#         }
+#       }
+#     }
+#
+#
 # The default values for the parameters are set in logstashforwarder::params. Have
 # a look at the corresponding <tt>params.pp</tt> manifest file if you need more
 # technical information about them.
@@ -176,7 +193,8 @@ class logstashforwarder(
   $init_defaults           = $logstashforwarder::params::init_defaults,
   $init_defaults_file      = undef,
   $init_template           = undef,
-  $manage_repo             = false
+  $manage_repo             = false,
+  $files                   = {},
 ) inherits logstashforwarder::params {
 
   anchor {'logstashforwarder::begin': }

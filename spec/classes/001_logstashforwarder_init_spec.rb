@@ -52,6 +52,26 @@ describe 'logstashforwarder', :type => 'class' do
         it { should contain_logstashforwarder_config('lsf-config') }
       end
 
+      context 'files as hash params' do
+        let (:params) {
+          default_params.merge({
+          :files => {
+            'syslog' => {
+              'paths' => ['/var/log/syslog'],
+              'fields' => { 'type' => 'apache' }
+            },
+            'apache' => {
+              'paths'  => [ '/var/log/apache/access.log' ],
+              'fields' => { 'type' => 'apache' },
+              }
+            }
+          })
+        }
+
+        it { should contain_logstashforwarder__file('syslog') }
+        it { should contain_logstashforwarder__file('apache') }
+      end
+
       context 'package installation' do
         
         context 'via repository' do
