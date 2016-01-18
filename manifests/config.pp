@@ -67,7 +67,7 @@ class logstashforwarder::config {
     $ssl_ca = $logstashforwarder::ssl_ca
     $ssl_key = $logstashforwarder::ssl_key
 
-    if $ssl_cert =~ /^puppet\:\/\// {
+    if $ssl_cert and $ssl_cert =~ /^puppet\:\/\// {
 
       $filenameArray_ssl_cert = split($ssl_cert, '/')
       $basefilename_ssl_cert = $filenameArray_ssl_cert[-1]
@@ -82,7 +82,7 @@ class logstashforwarder::config {
       $opt_ssl_cert = $ssl_cert
     }
 
-    if $ssl_ca =~ /^puppet\:\/\// {
+    if $ssl_ca and $ssl_ca =~ /^puppet\:\/\// {
 
       $filenameArray_ssl_ca = split($ssl_ca, '/')
       $basefilename_ssl_ca = $filenameArray_ssl_ca[-1]
@@ -97,7 +97,7 @@ class logstashforwarder::config {
       $opt_ssl_ca = $ssl_ca
     }
 
-    if $ssl_key =~ /^puppet\:\/\// {
+    if $ssl_key and $ssl_key =~ /^puppet\:\/\// {
 
       $filenameArray_ssl_key = split($ssl_key, '/')
       $basefilename_ssl_key = $filenameArray_ssl_key[-1]
