@@ -139,7 +139,7 @@ class logstashforwarder::package {
 
     $pkg_source = undef
     $pkg_provider = undef
-    $package_ensure = 'purged'
+    $package_ensure = 'absent'
   }
 
   case $logstashforwarder::package_provider {
