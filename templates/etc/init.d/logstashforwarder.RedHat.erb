@@ -13,16 +13,16 @@
 # Required-Stop: $local_fs $remote_fs
 # Default-Start: 2 3 4 5
 # Default-Stop: S 0 1 6
-# Short-Description: Logstash
-# Description: Starts Logstash as a daemon.
+# Short-Description: Logstash Forwarder
+# Description: Starts Logstash Forwarder as a daemon.
 
 ### END INIT INFO
 
 . /etc/rc.d/init.d/functions
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
-NAME=logstash
-DESC="Logstash Daemon"
+NAME=logstash-forwarder
+DESC="Logstash Forwarder Daemon"
 DEFAULT=/etc/sysconfig/$NAME
 
 if [ `id -u` -ne 0 ]; then
@@ -40,11 +40,11 @@ LS_HOME=/opt/logstash
 # Additional Java OPTS
 LS_JAVA_OPTS="-Xmx256m -Djava.io.tmpdir=$LS_HOME/tmp"
 
-# logstash log directory
+# logstash-forwarder log directory
 LOG_DIR=/var/log/logstash
 
-# logstash configuration directory
-CONF_DIR=/etc/logstash/conf.d
+# logstash-forwarder configuration
+CONFIG=/etc/logstash-forwarder/config.json
 
 # logstash log file
 LOG_FILE=$LOG_DIR/$NAME.log
