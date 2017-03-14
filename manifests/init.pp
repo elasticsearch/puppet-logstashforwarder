@@ -154,6 +154,7 @@
 #
 class logstashforwarder(
   $ensure                  = $logstashforwarder::params::ensure,
+  $lsf_name                = $logstashforwarder::params::lsf_name,
   $servers                 = undef,
   $ssl_cert                = undef,
   $ssl_key                 = undef,
@@ -176,7 +177,7 @@ class logstashforwarder(
   $init_defaults           = $logstashforwarder::params::init_defaults,
   $init_defaults_file      = undef,
   $init_template           = undef,
-  $manage_repo             = false
+  $manage_repo             = true,
 ) inherits logstashforwarder::params {
 
   anchor {'logstashforwarder::begin': }

@@ -34,6 +34,9 @@ class logstashforwarder::params {
   # ensure
   $ensure = 'present'
 
+  # Name to use instead of hardcoded name 
+  $lsf_name = 'logstash-forwarder'
+
   # autoupgrade
   $autoupgrade = false
 
@@ -123,7 +126,7 @@ class logstashforwarder::params {
   # service parameters
   case $::operatingsystem {
     'RedHat', 'CentOS', 'Fedora', 'Scientific', 'Amazon', 'OracleLinux': {
-      $service_name       = 'logstash-forwarder'
+      $service_name       = $lsf_name
       $service_hasrestart = true
       $service_hasstatus  = true
       $service_pattern    = $service_name
@@ -131,7 +134,7 @@ class logstashforwarder::params {
       $defaults_location  = '/etc/sysconfig'
     }
     'Debian', 'Ubuntu': {
-      $service_name       = 'logstash-forwarder'
+      $service_name       = $lsf_name
       $service_hasrestart = true
       $service_hasstatus  = true
       $service_pattern    = $service_name
