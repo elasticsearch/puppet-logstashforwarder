@@ -131,6 +131,11 @@ class logstashforwarder::config {
       require => File[$logstashforwarder::configdir]
     }
 
+    file { '/etc/logstash-forwarder':
+      ensure => link,
+      target => "${logstashforwarder::configdir}/config.json";
+    }
+
   } elsif ( $logstashforwarder::ensure == 'absent' ) {
 
     file { $logstashforwarder::configdir:
