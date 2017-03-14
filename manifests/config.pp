@@ -49,7 +49,10 @@ class logstashforwarder::config {
       true  => Class['logstashforwarder::service'],
       false => undef,
     }
-
+    file { "/etc/init.d/${logstashforwarder::service_name}":
+      ensure  => file,
+      content => template("${module_name}/logstashforwarder.Debian.erb"),
+    }
     file { $logstashforwarder::configdir:
       ensure => directory,
       mode   => '0644',
@@ -123,7 +126,7 @@ class logstashforwarder::config {
     logstashforwarder_config { 'lsf-config':
       ensure  => 'present',
       config  => $main_config,
-      path    => '/etc/logstash-forwarder.conf',
+      path    => "${logstashforwarder::configdir}/logstash-forwarder.conf",
       tag     => "LSF_CONFIG_${::fqdn}",
       owner   => $logstashforwarder::logstashforwarder_user,
       group   => $logstashforwarder::logstashforwarder_group,
